@@ -31,20 +31,20 @@ export default {
     generateRandom() {
       this.finalArray = this.users.map(x => x.name)
       for (let i of this.users) {
-        let receiver = this.randomize(i.name, this.finalArray)
-        this.finalArray = this.finalArray.filter(x => x !== receiver)
+        this.randomize(i.name, this.finalArray)
       }
     },
     randomize (user) {
-      let number = Math.floor(Math.random() * this.finalArray.length)
-      if (this.finalArray[number] !== user) {
+      let index
+      do {
+        index = Math.floor(Math.random() * this.finalArray.length)
+      }
+      while (this.finalArray[index] == user) {
         this.result.push({
           santa: user,
-          receiver: this.finalArray[number]
+          receiver: this.finalArray[index]
         })
-        return this.finalArray[number]
-      } else {
-        this.randomize(user)
+        this.finalArray.splice(index, 1)
       }
     }
   }
